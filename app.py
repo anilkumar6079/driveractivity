@@ -4,7 +4,7 @@ import werkzeug
 from werkzeug.wsgi import responder
 
 from predict_distracted_video import analyze_video
-app = Flask(__name__)
+app = Flask(__name__,static_folder='output')
 api = Api(app)
 
 
@@ -25,8 +25,8 @@ class HelloWorld(Resource):
             input_path = "./uploads/"+image_file.filename
             output_path = "./output/"+image_file.filename
             analyze_video(input_path,output_path)
-            response = send_file(output_path)
-            return response
+            # response = send_file(output_path)
+            return {"path":"/output/"+image_file.filename}
         except Exception as e:
             print("An exception occurred")
             print(e.message)
