@@ -1,11 +1,12 @@
 import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import json
-from keras.models import load_model
+from tensorflow.keras.models import load_model
 import pandas as pd
 import pickle
 import numpy as np
 import shutil
-from keras.preprocessing import image                  
+from tensorflow.keras.preprocessing import image                  
 from tqdm.notebook import tqdm
 from PIL import ImageFile                            
 import tensorflow as tf
