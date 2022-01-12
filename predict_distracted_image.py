@@ -33,22 +33,23 @@ with open(os.path.join(PICKLE_DIR,"labels_list.pkl"),"rb") as handle:
     labels_id = pickle.load(handle)
 print(labels_id)
 
-imageTest = "img_555.jpg"
-img = image.load_img(imageTest, target_size=(128, 128))
-x = image.img_to_array(img)
-imageProcessed = np.expand_dims(x, axis=0)
-ImageFile.LOAD_TRUNCATED_IMAGES = True  
-test_tensors = imageProcessed.astype('float32')/255 - 0.5
-ypred_test = model.predict(test_tensors,verbose=1)
-ypred_class = np.argmax(ypred_test,axis=1)
-print(ypred_class)
+
+def predict_img(imageTest):
+    img = image.load_img(imageTest, target_size=(128, 128))
+    x = image.img_to_array(img)
+    imageProcessed = np.expand_dims(x, axis=0)
+    ImageFile.LOAD_TRUNCATED_IMAGES = True  
+    test_tensors = imageProcessed.astype('float32')/255 - 0.5
+    ypred_test = model.predict(test_tensors,verbose=1)
+    ypred_class = np.argmax(ypred_test,axis=1)
+    print(ypred_class)
 
 
 
-id_labels = dict()
-for class_name,idx in labels_id.items():
-    id_labels[idx] = class_name
-    
-data_test = id_labels[ypred_class[0]]
+    id_labels = dict()
+    for class_name,idx in labels_id.items():
+        id_labels[idx] = class_name
+        
+    data_test = id_labels[ypred_class[0]]
 
-print(info[data_test])
+    return info[data_test]

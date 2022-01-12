@@ -33,6 +33,7 @@ def analyze_video(inputPath, outputPath):
     # Q = deque(maxlen=128)
     INPUT_VIDEO_FILE = inputPath
     OUTPUT_VIDEO_FILE = outputPath
+    labels = {}
     # initialize the video stream, pointer to output video file, and
     # frame dimensions
     vs = cv2.VideoCapture(INPUT_VIDEO_FILE)
@@ -61,6 +62,7 @@ def analyze_video(inputPath, outputPath):
         # make predictions on the frame and then update the predictions
         # queue
         label = predict_result(frame)
+        labels.add(label)
         # preds = model.predict(np.expand_dims(frame, axis=0))[0]
         # Q.append(preds)
 
@@ -92,7 +94,7 @@ def analyze_video(inputPath, outputPath):
     print("[INFO] cleaning up...")
     writer.release()
     vs.release()
-    return True
+    return labels
 
 
 # lb = pickle.loads(open(args["label_bin"], "rb").read())

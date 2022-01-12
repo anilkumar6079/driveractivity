@@ -4,15 +4,16 @@ import werkzeug
 from werkzeug.wsgi import responder
 from flask_cors import CORS
 from predict_distracted_video import analyze_video
+from predict_distracted_image import  predict_img
 app = Flask(__name__,static_folder='output')
 api = Api(app)
 CORS(app)
 import os
 
 
-class HelloWorld(Resource):
+class PredictionAPI(Resource):
     def get(self):
-        return {'hello': 'world'}
+        return {'status': 'alive!'}
 
     def post(self):
         parse = reqparse.RequestParser()
@@ -25,17 +26,23 @@ class HelloWorld(Resource):
         # TODO analyze video
         try:
             input_path = "./uploads/"+image_file.filename
-            output_path = "./output/"+os.path.splitext(image_file.filename)[0]+".mp4"
-            analyze_video(input_path,output_path)
+            if self.isMP4(input_path):
+                output_path = "./output/"+os.path.splitext(image_file.filename)[0]+".mp4"
+                labels = analyze_video(input_path,output_path)
+                return {"path":"output/"+os.path.splitext(image_file.filename)[0]+".mp4","labels" : labels}
+            else:
+                return {"label" : predict_img(input_path)}    
             # response = send_file(output_path)
-            return {"path":"output/"+os.path.splitext(image_file.filename)[0]+".mp4"}
         except Exception as e:
             print("An exception occurred")
-            print(e.message)
-            return {"status" : "failed","message" : e.message}
+            print(e)
+            return {"status" : "failed"}
+            
+    def isMP4(path):
+        parts = os.path.splitext(path)
+        return (len(parts) == 2 and parts[1].upper() == "MP4")
 
-
-api.add_resource(HelloWorld, '/')
+api.add_resource(PredictionAPI, '/predict')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
