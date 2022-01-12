@@ -2,10 +2,12 @@ from flask import Flask, send_file
 from flask_restful import Resource, Api, reqparse
 import werkzeug
 from werkzeug.wsgi import responder
-
+from flask_cors import CORS
 from predict_distracted_video import analyze_video
 app = Flask(__name__,static_folder='output')
 api = Api(app)
+CORS(app)
+import os
 
 
 class HelloWorld(Resource):
@@ -23,10 +25,10 @@ class HelloWorld(Resource):
         # TODO analyze video
         try:
             input_path = "./uploads/"+image_file.filename
-            output_path = "./output/"+image_file.filename
+            output_path = "./output/"+os.path.splitext(image_file.filename)[0]+".mp4"
             analyze_video(input_path,output_path)
             # response = send_file(output_path)
-            return {"path":"/output/"+image_file.filename}
+            return {"path":"output/"+os.path.splitext(image_file.filename)[0]+".mp4"}
         except Exception as e:
             print("An exception occurred")
             print(e.message)

@@ -77,7 +77,7 @@ def analyze_video(inputPath, outputPath):
         # check if the video writer is None
         if writer is None:
             # initialize our video writer
-            fourcc = cv2.VideoWriter_fourcc(*"MJPG")
+            fourcc = cv2.VideoWriter_fourcc(*'MPEG')
             writer = cv2.VideoWriter(OUTPUT_VIDEO_FILE, fourcc, 30,
                                      (W, H), True)
         # write the output frame to disk
