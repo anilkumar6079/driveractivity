@@ -33,7 +33,7 @@ def analyze_video(inputPath, outputPath):
     # Q = deque(maxlen=128)
     INPUT_VIDEO_FILE = inputPath
     OUTPUT_VIDEO_FILE = outputPath
-    labels = {}
+    labels = set()
     # initialize the video stream, pointer to output video file, and
     # frame dimensions
     vs = cv2.VideoCapture(INPUT_VIDEO_FILE)
