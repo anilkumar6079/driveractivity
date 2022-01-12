@@ -37,8 +37,8 @@ class PredictionAPI(Resource):
             print("An exception occurred")
             print(e)
             return {"status" : "failed"}
-            
-    def isMP4(path):
+
+    def isMP4(self,path):
         parts = os.path.splitext(path)
         return (len(parts) == 2 and parts[1].upper() == "MP4")
 
