@@ -14,7 +14,18 @@ BASE_MODEL_PATH = "./model"
 PICKLE_DIR = "./pickle_files"
 JSON_DIR = "./json_files"
 
-
+info = {
+    "c0": "SAFE_DRIVING",
+    "c1": "TEXTING_RIGHT",
+    "c2": "TALKING_PHONE_RIGHT",
+    "c3": "TEXTING_LEFT",
+    "c4": "TALKING_PHONE_LEFT",
+    "c5": "OPERATING_RADIO",
+    "c6": "DRINKING",
+    "c7": "REACHING_BEHIND",
+    "c8": "HAIR_AND_MAKEUP",
+    "c9": "TALKING_TO_PASSENGER"
+}
 BEST_MODEL = os.path.join(BASE_MODEL_PATH,"distracted-17-1.00.hdf5")
 model = load_model(BEST_MODEL)
 
@@ -40,7 +51,4 @@ for class_name,idx in labels_id.items():
     
 data_test = id_labels[ypred_class[0]]
 
-with open(os.path.join(JSON_DIR,'class_name_map.json')) as secret_input:
-    info = json.load(secret_input)
-
-info[data_test]
+print(info[data_test])
