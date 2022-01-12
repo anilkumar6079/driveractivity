@@ -8,8 +8,10 @@ import cv2
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 # construct the argument parser and parse the arguments
-
-
+from json import JSONEncoder
+class setEncoder(JSONEncoder):
+        def default(self, obj):
+            return list(obj)
 def analyze_video(inputPath, outputPath):
     # ap = argparse.ArgumentParser()
     # ap.add_argument("-m", "--model", required=True,
@@ -94,7 +96,7 @@ def analyze_video(inputPath, outputPath):
     print("[INFO] cleaning up...")
     writer.release()
     vs.release()
-    return labels
+    return setEncoder().encode(labels)
 
 
 # lb = pickle.loads(open(args["label_bin"], "rb").read())
