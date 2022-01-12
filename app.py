@@ -38,9 +38,9 @@ class PredictionAPI(Resource):
             print(e)
             return {"status" : "failed"}
 
-    def isMP4(self,path):
+    def isMP4(self,import ):
         parts = os.path.splitext(path)
-        return (len(parts) == 2 and parts[1].upper() == "MP4")
+        return (len(parts) == 2 and parts[1].upper() == ".MP4")
 
 api.add_resource(PredictionAPI, '/predict')
 
