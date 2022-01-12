@@ -28,6 +28,7 @@ x = image.img_to_array(img)
 imageProcessed = np.expand_dims(x, axis=0)
 ImageFile.LOAD_TRUNCATED_IMAGES = True  
 test_tensors = imageProcessed.astype('float32')/255 - 0.5
+ypred_test = model.predict(test_tensors,verbose=1)
 ypred_class = np.argmax(ypred_test,axis=1)
 print(ypred_class)
 
